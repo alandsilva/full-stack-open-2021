@@ -1,0 +1,9 @@
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: 201 {"message":"note created"}
+
+note over browser:
+In single page applications
+the browser does not request
+the whole page again after a 
+POST request
+end note
