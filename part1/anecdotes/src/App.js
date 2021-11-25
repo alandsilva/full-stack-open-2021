@@ -34,7 +34,7 @@ const App = () => {
         next anecdote
       </button>
 
-      <h2>Anecdote with most votes</h2>
+      <h2>Anecdote with most Votes</h2>
       <p>{anecdotes[points.indexOf(Math.max(...points))]}</p>
     </div>
   );
