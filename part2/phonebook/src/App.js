@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import './index.css';
 import Filter from './Filter';
 import PersonForm from './PersonForm';
 import Persons from './Persons';
+import Notification from './Notification';
 import personService from './services/persons';
 
 const App = () => {
@@ -9,10 +11,11 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [search, setSearch] = useState('');
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState('error');
 
   useEffect(() => {
     personService.getAll().then((response) => {
-      console.log('promise fulfilled');
       setPersons(response.data);
     });
   }, []);
@@ -37,6 +40,7 @@ const App = () => {
       updatePerson(newPerson);
     } else {
       personService.create(newPerson).then((response) => {
+        updateMessage(`Added ${newPerson.name}`, 'success');
         setPersons(persons.concat(response.data));
       });
     }
@@ -52,6 +56,7 @@ const App = () => {
       const person = persons.find((person) => person.name === newPerson.name);
       const changedPerson = { ...person, number: newPerson.number };
       personService.update(person.id, changedPerson).then((response) => {
+        updateMessage(`Updated ${newPerson.name}`, 'success');
         setPersons(
           persons.map((p) => (p.id !== person.id ? p : response.data))
         );
@@ -61,10 +66,29 @@ const App = () => {
 
   const removePerson = (personToRemove) => {
     if (window.confirm(`Delete ${personToRemove.name} ?`)) {
-      personService.remove(personToRemove.id).then(() => {
-        setPersons(persons.filter((person) => person.id !== personToRemove.id));
-      });
+      personService
+        .remove(personToRemove.id)
+        .then(() => {
+          updateMessage(`Deleted ${personToRemove.name}`, 'success');
+          setPersons(
+            persons.filter((person) => person.id !== personToRemove.id)
+          );
+        })
+        .catch(() => {
+          updateMessage(
+            `${personToRemove.name} was already removed from server`,
+            'error'
+          );
+        });
     }
+  };
+
+  const updateMessage = (message, type) => {
+    setMessageType(type);
+    setMessage(message);
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
   };
 
   const namesToShow = persons.filter((person) =>
@@ -73,6 +97,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} type={messageType} />
       <Filter search={search} handleSearchChange={handleSearchChange} />
       <h3>Add a new</h3>
       <PersonForm

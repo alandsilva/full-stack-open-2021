@@ -1,5 +1,4 @@
 import React from 'react';
-import personService from './services/persons';
 
 const Persons = ({ namesToShow, removePerson }) => {
   return namesToShow.map((person, i) => (
