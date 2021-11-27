@@ -55,12 +55,20 @@ const App = () => {
     ) {
       const person = persons.find((person) => person.name === newPerson.name);
       const changedPerson = { ...person, number: newPerson.number };
-      personService.update(person.id, changedPerson).then((response) => {
-        updateMessage(`Updated ${newPerson.name}`, 'success');
-        setPersons(
-          persons.map((p) => (p.id !== person.id ? p : response.data))
-        );
-      });
+      personService
+        .update(person.id, changedPerson)
+        .then((response) => {
+          updateMessage(`Updated ${newPerson.name}`, 'success');
+          setPersons(
+            persons.map((p) => (p.id !== person.id ? p : response.data))
+          );
+        })
+        .catch(() => {
+          updateMessage(
+            `Information of ${newPerson.name} has already been removed from server`,
+            'error'
+          );
+        });
     }
   };
 
