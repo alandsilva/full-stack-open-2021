@@ -37,8 +37,23 @@
     },
     {
       "content": "High",
-      "id": "49257",
-      "votes": 0
+      "votes": 3,
+      "id": "49257"
+    },
+    {
+      "content": "A new anecdote",
+      "votes": 2,
+      "id": "20430"
+    },
+    {
+      "content": "A simple joke",
+      "votes": 3,
+      "id": "94310"
+    },
+    {
+      "content": "Another anecdote",
+      "votes": 1,
+      "id": "37228"
     }
   ]
 }
