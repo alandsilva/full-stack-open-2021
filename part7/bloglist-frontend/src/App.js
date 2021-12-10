@@ -8,32 +8,21 @@ import './index.css';
 import blogService from './services/blogs';
 import loginService from './services/login';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setNotification } from './reducers/notificationReducer';
+import { initializeBlogs, createBlog } from './reducers/blogReducer';
 
 const App = () => {
+  const blogs = useSelector((state) => state.blogs);
   const dispatch = useDispatch();
 
-  const [blogs, setBlogs] = useState([]);
   const [user, setUser] = useState(null);
 
   const blogFormRef = useRef();
 
   const handleCreateBlog = async (newBlog) => {
-    try {
-      const response = await blogService.create(newBlog);
-      dispatch(
-        setNotification(
-          `A new blog '${response.title}' by '${response.author}'`,
-          'success',
-          5
-        )
-      );
-      blogFormRef.current.toggleVisibility();
-      setBlogs(blogs.concat(response));
-    } catch (error) {
-      dispatch(setNotification('Failed to create blog', 'error', 5));
-    }
+    dispatch(createBlog(newBlog));
+    blogFormRef.current.toggleVisibility();
   };
 
   const handleUpdateBlog = async (id, updatedBlog) => {
@@ -42,11 +31,11 @@ const App = () => {
       dispatch(
         setNotification(`Liked the '${response.title}' blog`, 'success', 5)
       );
-      setBlogs(
-        blogs.map((blog) =>
-          blog.id !== id ? blog : { ...blog, likes: blog.likes + 1 }
-        )
-      );
+      // setBlogs(
+      //   blogs.map((blog) =>
+      //     blog.id !== id ? blog : { ...blog, likes: blog.likes + 1 }
+      //   )
+      // );
     } catch (error) {
       dispatch(setNotification('failed to update blog', 'error', 5));
     }
@@ -55,7 +44,7 @@ const App = () => {
   const handleRemoveBlog = async (id) => {
     try {
       await blogService.remove(id);
-      setBlogs(blogs.filter((blog) => blog.id !== id));
+      // setBlogs(blogs.filter((blog) => blog.id !== id));
       dispatch(setNotification('Blog was deleted', 'success', 5));
     } catch (error) {
       dispatch(setNotification('Failed to remove blog', 'error', 5));
@@ -79,12 +68,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => {
-      blogs.sort((a, b) => {
-        return b.likes - a.likes;
-      });
-      setBlogs(blogs);
-    });
+    dispatch(initializeBlogs());
   }, []);
 
   useEffect(() => {
