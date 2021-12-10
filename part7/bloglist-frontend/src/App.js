@@ -25,32 +25,6 @@ const App = () => {
     blogFormRef.current.toggleVisibility();
   };
 
-  const handleUpdateBlog = async (id, updatedBlog) => {
-    try {
-      const response = await blogService.update(id, updatedBlog);
-      dispatch(
-        setNotification(`Liked the '${response.title}' blog`, 'success', 5)
-      );
-      // setBlogs(
-      //   blogs.map((blog) =>
-      //     blog.id !== id ? blog : { ...blog, likes: blog.likes + 1 }
-      //   )
-      // );
-    } catch (error) {
-      dispatch(setNotification('failed to update blog', 'error', 5));
-    }
-  };
-
-  const handleRemoveBlog = async (id) => {
-    try {
-      await blogService.remove(id);
-      // setBlogs(blogs.filter((blog) => blog.id !== id));
-      dispatch(setNotification('Blog was deleted', 'success', 5));
-    } catch (error) {
-      dispatch(setNotification('Failed to remove blog', 'error', 5));
-    }
-  };
-
   const handleLogin = async (newLogin) => {
     try {
       const user = await loginService.login(newLogin);
@@ -96,13 +70,7 @@ const App = () => {
 
         <div className='blogs-list'>
           {blogs.map((blog) => (
-            <Blog
-              key={blog.id}
-              blog={blog}
-              updateBlog={handleUpdateBlog}
-              removeBlog={handleRemoveBlog}
-              user={user}
-            />
+            <Blog key={blog.id} blog={blog} user={user} />
           ))}
         </div>
       </div>
