@@ -6,11 +6,12 @@ import Togglable from './components/Togglable';
 import Notification from './components/Notification';
 import UserList from './components/UserList';
 import User from './components/User';
+import Menu from './components/Menu';
 import './index.css';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeBlogs, createBlog } from './reducers/blogReducer';
-import { logout, getAuthFromMemory } from './reducers/authReducer';
+import { getAuthFromMemory } from './reducers/authReducer';
 
 import { Routes, Route, Link } from 'react-router-dom';
 
@@ -24,10 +25,6 @@ const App = () => {
   const handleCreateBlog = async (newBlog) => {
     dispatch(createBlog(newBlog));
     blogFormRef.current.toggleVisibility();
-  };
-
-  const handleLogout = () => {
-    dispatch(logout());
   };
 
   useEffect(() => {
@@ -50,7 +47,6 @@ const App = () => {
 
         <div className='blogs-list'>
           {blogs.map((blog) => (
-            // <Blog key={blog.id} blog={blog} user={auth.user} />
             <p key={blog.id} className='blog'>
               <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
             </p>
@@ -62,15 +58,12 @@ const App = () => {
   return (
     <div>
       <Notification />
-      <h2>blogs</h2>
       {auth === null ? (
         loginForm()
       ) : (
         <div>
-          <p>
-            {auth.user.name} logged in{' '}
-            <button onClick={handleLogout}>logout</button>
-          </p>
+          <Menu />
+          <h2>blogs</h2>
           <Routes>
             <Route path='/users/:id' element={<User />} />
             <Route path='/users' element={<UserList />} />
