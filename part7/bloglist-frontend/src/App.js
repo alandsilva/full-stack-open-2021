@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { initializeBlogs, createBlog } from './reducers/blogReducer';
 import { logout, getAuthFromMemory } from './reducers/authReducer';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs);
@@ -50,7 +50,10 @@ const App = () => {
 
         <div className='blogs-list'>
           {blogs.map((blog) => (
-            <Blog key={blog.id} blog={blog} user={auth.user} />
+            // <Blog key={blog.id} blog={blog} user={auth.user} />
+            <p key={blog.id} className='blog'>
+              <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+            </p>
           ))}
         </div>
       </div>
@@ -71,6 +74,7 @@ const App = () => {
           <Routes>
             <Route path='/users/:id' element={<User />} />
             <Route path='/users' element={<UserList />} />
+            <Route path='/blogs/:id' element={<Blog />} />
             <Route path='/' element={blogsData()} />
           </Routes>
         </div>

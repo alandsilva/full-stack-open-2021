@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
 import { like, remove } from '../reducers/blogReducer';
 
-const Blog = ({ blog, user }) => {
+const Blog = () => {
   const dispatch = useDispatch();
-
-  const [visible, setVisible] = useState(false);
-  const showWhenVisible = { display: visible ? '' : 'none' };
-
-  const toggleVisibility = () => {
-    setVisible(!visible);
-  };
+  const params = useParams();
+  const navigate = useNavigate();
+  const blog = useSelector((state) =>
+    state.blogs.filter((blog) => blog.id === params.id)
+  )[0];
+  const user = useSelector((state) => state.auth.user);
 
   const handleLikeBlog = () => {
     dispatch(like(blog));
@@ -19,25 +19,30 @@ const Blog = ({ blog, user }) => {
   const handleRemoveBlog = () => {
     if (window.confirm(`Remove blog '${blog.title}' by '${blog.author}?'`)) {
       dispatch(remove(blog.id));
+      navigate('/');
     }
   };
 
-  return (
-    <div className='blog'>
-      {blog.title} {blog.author}{' '}
-      <button onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
-      <div style={showWhenVisible} className='detailsContent'>
-        <p className='url'>{blog.url}</p>
-        <p className='likes'>
-          likes <span className='like-value'>{blog.likes}</span>{' '}
-          <button onClick={handleLikeBlog}>like</button>
-        </p>
-        <p>{blog.user.name}</p>
+  if (!blog) {
+    return null;
+  }
 
-        {user.username === blog.user.username && (
-          <button onClick={handleRemoveBlog}>remove</button>
-        )}
-      </div>
+  return (
+    <div>
+      <h2>
+        {blog.title} {blog.author}
+      </h2>
+
+      <p className='url'>{blog.url}</p>
+      <p className='likes'>
+        likes <span className='like-value'>{blog.likes}</span>{' '}
+        <button onClick={handleLikeBlog}>like</button>
+      </p>
+      <p>{blog.user.name}</p>
+
+      {user.username === blog.user.username && (
+        <button onClick={handleRemoveBlog}>remove</button>
+      )}
     </div>
   );
 };
