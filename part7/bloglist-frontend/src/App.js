@@ -4,11 +4,15 @@ import BlogForm from './components/BlogForm';
 import LoginForm from './components/LoginForm';
 import Togglable from './components/Togglable';
 import Notification from './components/Notification';
+import UserList from './components/UserList';
+import User from './components/User';
 import './index.css';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { initializeBlogs, createBlog } from './reducers/blogReducer';
 import { logout, getAuthFromMemory } from './reducers/authReducer';
+
+import { Routes, Route } from 'react-router-dom';
 
 const App = () => {
   const blogs = useSelector((state) => state.blogs);
@@ -40,11 +44,6 @@ const App = () => {
   const blogsData = () => {
     return (
       <div>
-        <h2>blogs</h2>
-        <p>
-          {auth.user.name} logged in{' '}
-          <button onClick={handleLogout}>logout</button>
-        </p>
         <Togglable buttonLabel='create Blog' ref={blogFormRef}>
           <BlogForm createBlog={handleCreateBlog} />
         </Togglable>
@@ -60,7 +59,22 @@ const App = () => {
   return (
     <div>
       <Notification />
-      {auth === null ? loginForm() : blogsData()}
+      <h2>blogs</h2>
+      {auth === null ? (
+        loginForm()
+      ) : (
+        <div>
+          <p>
+            {auth.user.name} logged in{' '}
+            <button onClick={handleLogout}>logout</button>
+          </p>
+          <Routes>
+            <Route path='/users/:id' element={<User />} />
+            <Route path='/users' element={<UserList />} />
+            <Route path='/' element={blogsData()} />
+          </Routes>
+        </div>
+      )}
     </div>
   );
 };
