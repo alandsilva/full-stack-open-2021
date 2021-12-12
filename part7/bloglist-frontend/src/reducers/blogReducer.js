@@ -11,6 +11,7 @@ const reducer = (state = [], action) => {
     case 'REMOVE_BLOG':
       return state.filter((blog) => blog.id !== action.data.id);
     case 'LIKE':
+    case 'COMMENT':
       return state.map((blog) =>
         blog.id !== action.data.id ? blog : action.data
       );
@@ -86,6 +87,23 @@ export const remove = (id) => {
       dispatch(setNotification('You deleted a blog', 'success', 5));
     } catch (err) {
       dispatch(setNotification('Failed to delete blog', 'error', 5));
+    }
+  };
+};
+
+export const addComment = (id, comment) => {
+  return async (dispatch) => {
+    try {
+      const updatedBlog = await blogService.addComment(id, comment);
+      dispatch({
+        type: 'COMMENT',
+        data: updatedBlog,
+      });
+      dispatch(
+        setNotification(`You commented on '${updatedBlog.title}'`, 'success', 5)
+      );
+    } catch (err) {
+      dispatch(setNotification('Failed to comment on blog', 'error', 5));
     }
   };
 };
