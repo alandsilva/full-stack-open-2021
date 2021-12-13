@@ -45,7 +45,7 @@ const App = () => {
           <BlogForm createBlog={handleCreateBlog} />
         </Togglable>
 
-        <div className='blogs-list'>
+        <div>
           {blogs.map((blog) => (
             <p key={blog.id} className='blog'>
               <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
@@ -56,7 +56,7 @@ const App = () => {
     );
   };
   return (
-    <div>
+    <div className='container'>
       <Notification />
       {auth === null ? (
         loginForm()

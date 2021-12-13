@@ -25,7 +25,7 @@ export const login = (newLogin) => {
         data: { user },
       });
     } catch (err) {
-      dispatch(setNotification('Wrong credentials', 'error', 5));
+      dispatch(setNotification('Wrong credentials', 'danger', 5));
     }
   };
 };

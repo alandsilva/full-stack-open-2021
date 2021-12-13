@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { initializeUsers } from '../reducers/userReducer';
 
+import { Table } from 'react-bootstrap';
+
 const UserList = () => {
   const users = useSelector((state) => state.users);
   console.log(users);
@@ -16,10 +18,10 @@ const UserList = () => {
   return (
     <div>
       <h3>Users</h3>
-      <table>
+      <Table striped>
         <tbody>
           <tr>
-            <th>_</th>
+            <th></th>
             <th>blogs created</th>
           </tr>
           {users.map((user) => (
@@ -31,7 +33,7 @@ const UserList = () => {
             </tr>
           ))}
         </tbody>
-      </table>
+      </Table>
     </div>
   );
 };

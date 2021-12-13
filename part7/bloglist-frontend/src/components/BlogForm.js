@@ -1,6 +1,8 @@
 import React from 'react';
 import { useField } from '../hooks';
 
+import { Form, Button } from 'react-bootstrap';
+
 const BlogForm = ({ createBlog }) => {
   const title = useField('text');
   const author = useField('text');
@@ -21,24 +23,30 @@ const BlogForm = ({ createBlog }) => {
   return (
     <div>
       <h2>create new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          title:
-          <input {...title} reset={null} />
-        </div>
-        <div>
-          author:
-          <input {...author} reset={null} />
-        </div>
-        <div>
-          url:
-          <input {...url} reset={null} />
-        </div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group className='mb-3' controlId='formBasicEmail'>
+          <Form.Label>Title</Form.Label>
+          <Form.Control {...title} reset={null} placeholder='Enter Title' />
+        </Form.Group>
 
-        <button id='blogform-button' type='submit'>
-          create
-        </button>
-      </form>
+        <Form.Group className='mb-3' controlId='formBasicPassword'>
+          <Form.Label>Author</Form.Label>
+          <Form.Control
+            {...author}
+            reset={null}
+            placeholder='Author McAuthor'
+          />
+        </Form.Group>
+
+        <Form.Group className='mb-3' controlId='formBasicEmail'>
+          <Form.Label>URL</Form.Label>
+          <Form.Control {...url} reset={null} placeholder='https://url.com' />
+        </Form.Group>
+
+        <Button variant='primary' type='submit'>
+          Submit
+        </Button>
+      </Form>
     </div>
   );
 };

@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import { login } from '../reducers/authReducer';
 import { useField } from '../hooks';
 
+import { Form, Button } from 'react-bootstrap';
+
 const LoginForm = () => {
   const dispatch = useDispatch();
 
@@ -16,21 +18,23 @@ const LoginForm = () => {
     dispatch(login(newLogin));
   };
   return (
-    <div>
-      <form className='loginForm' onSubmit={handleLogin}>
-        <div>
-          username
-          <input {...username} reset={null} />
-        </div>
-        <div>
-          password
-          <input {...password} reset={null} />
-        </div>
-        <button id='login-button' type='submit'>
-          login
-        </button>
-      </form>
-    </div>
+    <Form onSubmit={handleLogin}>
+      <Form.Group className='mb-3' controlId='formBasicEmail'>
+        <Form.Label>Email address</Form.Label>
+        <Form.Control {...username} reset={null} placeholder='Enter email' />
+        <Form.Text className='text-muted'>
+          Well never share your email with anyone else.
+        </Form.Text>
+      </Form.Group>
+
+      <Form.Group className='mb-3' controlId='formBasicPassword'>
+        <Form.Label>Password</Form.Label>
+        <Form.Control {...password} reset={null} placeholder='Password' />
+      </Form.Group>
+      <Button variant='primary' type='submit'>
+        Submit
+      </Button>
+    </Form>
   );
 };
 

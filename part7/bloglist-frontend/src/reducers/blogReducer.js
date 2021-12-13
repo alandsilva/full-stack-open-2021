@@ -46,7 +46,7 @@ export const createBlog = (newObject) => {
         )
       );
     } catch (err) {
-      dispatch(setNotification('Failed to create blog', 'error', 5));
+      dispatch(setNotification('Failed to create blog', 'danger', 5));
     }
   };
 };
@@ -71,7 +71,7 @@ export const like = (blog) => {
         setNotification(`You liked '${updatedBlog.title}'`, 'success', 5)
       );
     } catch (err) {
-      dispatch(setNotification('Failed to like blog', 'error', 5));
+      dispatch(setNotification('Failed to like blog', 'danger', 5));
     }
   };
 };
@@ -86,7 +86,7 @@ export const remove = (id) => {
       });
       dispatch(setNotification('You deleted a blog', 'success', 5));
     } catch (err) {
-      dispatch(setNotification('Failed to delete blog', 'error', 5));
+      dispatch(setNotification('Failed to delete blog', 'danger', 5));
     }
   };
 };
@@ -103,7 +103,7 @@ export const addComment = (id, comment) => {
         setNotification(`You commented on '${updatedBlog.title}'`, 'success', 5)
       );
     } catch (err) {
-      dispatch(setNotification('Failed to comment on blog', 'error', 5));
+      dispatch(setNotification('Failed to comment on blog', 'danger', 5));
     }
   };
 };
