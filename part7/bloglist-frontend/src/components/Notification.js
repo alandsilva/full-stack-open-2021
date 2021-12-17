@@ -9,7 +9,9 @@ const Notification = () => {
   return (
     <div>
       {notification.message && (
-        <Alert variant={notification.style}>{notification.message}</Alert>
+        <Alert id='notification' variant={notification.style}>
+          {notification.message}
+        </Alert>
       )}
     </div>
   );

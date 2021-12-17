@@ -25,13 +25,19 @@ const BlogForm = ({ createBlog }) => {
       <h2>create new</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className='mb-3' controlId='formBasicEmail'>
-          <Form.Label>Title</Form.Label>
-          <Form.Control {...title} reset={null} placeholder='Enter Title' />
+          <Form.Label>title</Form.Label>
+          <Form.Control
+            id='title'
+            {...title}
+            reset={null}
+            placeholder='Enter Title'
+          />
         </Form.Group>
 
         <Form.Group className='mb-3' controlId='formBasicPassword'>
-          <Form.Label>Author</Form.Label>
+          <Form.Label>author</Form.Label>
           <Form.Control
+            id='author'
             {...author}
             reset={null}
             placeholder='Author McAuthor'
@@ -39,11 +45,16 @@ const BlogForm = ({ createBlog }) => {
         </Form.Group>
 
         <Form.Group className='mb-3' controlId='formBasicEmail'>
-          <Form.Label>URL</Form.Label>
-          <Form.Control {...url} reset={null} placeholder='https://url.com' />
+          <Form.Label>url</Form.Label>
+          <Form.Control
+            id='url'
+            {...url}
+            reset={null}
+            placeholder='https://url.com'
+          />
         </Form.Group>
 
-        <Button variant='primary' type='submit'>
+        <Button id='blogform-button' variant='primary' type='submit'>
           Submit
         </Button>
       </Form>

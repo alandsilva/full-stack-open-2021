@@ -47,8 +47,12 @@ const Blog = () => {
           </Card.Subtitle>
           <Card.Link href={blog.url}>{blog.url}</Card.Link>
           <Card.Text>
-            Likes {blog.likes}{' '}
-            <Button variant='outline-primary' onClick={handleLikeBlog}>
+            Likes <span className='like-value'>{blog.likes}</span>{' '}
+            <Button
+              id='like-button'
+              variant='outline-primary'
+              onClick={handleLikeBlog}
+            >
               like
             </Button>
           </Card.Text>
@@ -58,7 +62,11 @@ const Blog = () => {
 
       {user.username === blog.user.username && (
         <Card.Text>
-          <Button variant='outline-danger' onClick={handleRemoveBlog}>
+          <Button
+            id='remove-button'
+            variant='outline-danger'
+            onClick={handleRemoveBlog}
+          >
             Delete
           </Button>
         </Card.Text>

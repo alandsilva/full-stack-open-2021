@@ -20,18 +20,25 @@ const LoginForm = () => {
   return (
     <Form onSubmit={handleLogin}>
       <Form.Group className='mb-3' controlId='formBasicEmail'>
-        <Form.Label>Email address</Form.Label>
-        <Form.Control {...username} reset={null} placeholder='Enter email' />
-        <Form.Text className='text-muted'>
-          Well never share your email with anyone else.
-        </Form.Text>
+        <Form.Label>username</Form.Label>
+        <Form.Control
+          id='username'
+          {...username}
+          reset={null}
+          placeholder='Enter Username'
+        />
       </Form.Group>
 
       <Form.Group className='mb-3' controlId='formBasicPassword'>
-        <Form.Label>Password</Form.Label>
-        <Form.Control {...password} reset={null} placeholder='Password' />
+        <Form.Label>password</Form.Label>
+        <Form.Control
+          id='password'
+          {...password}
+          reset={null}
+          placeholder='Password'
+        />
       </Form.Group>
-      <Button variant='primary' type='submit'>
+      <Button id='login-button' variant='primary' type='submit'>
         Submit
       </Button>
     </Form>
