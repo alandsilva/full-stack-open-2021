@@ -15,6 +15,8 @@ import { getAuthFromMemory } from './reducers/authReducer';
 
 import { Routes, Route, Link } from 'react-router-dom';
 
+import { Table } from 'react-bootstrap';
+
 const App = () => {
   const blogs = useSelector((state) => state.blogs);
   const auth = useSelector((state) => state.auth);
@@ -45,13 +47,19 @@ const App = () => {
           <BlogForm createBlog={handleCreateBlog} />
         </Togglable>
 
-        <div>
-          {blogs.map((blog) => (
-            <p key={blog.id} className='blog'>
-              <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-            </p>
-          ))}
-        </div>
+        <Table striped>
+          <tbody>
+            {blogs.map((blog) => (
+              <tr key={blog.id}>
+                <td>
+                  <Link to={`/blogs/${blog.id}`}>
+                    {blog.title} - {blog.author}
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
     );
   };

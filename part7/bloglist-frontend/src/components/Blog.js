@@ -59,7 +59,7 @@ const Blog = () => {
       {user.username === blog.user.username && (
         <Card.Text>
           <Button variant='outline-danger' onClick={handleRemoveBlog}>
-            like
+            Delete
           </Button>
         </Card.Text>
       )}
